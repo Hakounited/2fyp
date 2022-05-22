@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".Activities.MyProductsActivity">
+
+
+    <LinearLayout
+        android:id="@+id/my_products_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/primary"
+        android:elevation="@dimen/_5sdp">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back_btn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/white"
+            android:elevation="@dimen/_5sdp"
+            android:paddingStart="@dimen/_12sdp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/my_product_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_products_layout1"
+        android:layout_centerHorizontal="true"
+        android:text="My Products"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/_25ssp"
+        android:elevation="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_16sdp"
+        android:layout_below="@+id/my_product_tv">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_product_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/my_product_tv"
+            android:background="@color/white"
+            android:elevation="@dimen/_5sdp"
+            android:padding="@dimen/_20sdp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_6sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_8sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_img"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@drawable/background_image"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/imagepdf"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/admin_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAME"
+            android:layout_toRightOf="@+id/user_img"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textSize="@dimen/_7ssp"
+            />
+
+
+        <TextView
+            android:id="@+id/admin_user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email address"
+            android:textSize="@dimen/_6ssp"
+            android:layout_toRightOf="@+id/user_img"
+            android:layout_below="@+id/admin_user_name"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            />
+
+        <ImageButton
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/delete"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            />
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>
