@@ -4,39 +4,21 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
-    public String productName, productDescription, productPrice, productImg, postedBy;
+    public String productName, productDescription, productPrice, productImg, postedBy, productId, productRating;
 
 
     public Product(){
 
     }
 
-    public Product(String productName, String productDescription, String productPrice, String productImg, String postedBy) {
+    public Product(String productName, String productDescription, String productPrice, String productImg, String postedBy, String productId, String productRating) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.productImg = productImg;
         this.postedBy = postedBy;
-    }
-
-    public String getPostedBy() {
-        return postedBy;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public String getProductPrice() {
-        return productPrice;
-    }
-
-    public String getProductImg() {
-        return productImg;
+        this.productId = productId;
+        this.productRating = productRating;
     }
 
     public void setProductName(String productName) {
@@ -57,5 +39,41 @@ public class Product implements Serializable {
 
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setProductRating(String productRating) {
+        this.productRating = productRating;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public String getProductImg() {
+        return productImg;
+    }
+
+    public String getPostedBy() {
+        return postedBy;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getProductRating() {
+        return productRating;
     }
 }

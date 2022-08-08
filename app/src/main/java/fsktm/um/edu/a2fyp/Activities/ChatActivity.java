@@ -53,7 +53,8 @@ public class ChatActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
     private FirebaseFirestore firestore;
     FirebaseAuth mAuth;
-    String conversationId;
+    String conversationId, from;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,52 +62,143 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
-        setListeners();
 
         firestore = FirebaseFirestore.getInstance();
-        receiverUser = getIntent().getExtras().getString("posted_by");
+        init();
 
-        binding.textName.setText(receiverUser);
-        firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",receiverUser).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        receiverUid = document.getString("userId");
-                        receiverImg = document.getString("image");
-                        binding.rImg.setText(receiverImg);
-                        binding.rId.setText(receiverUid);
-                        showToast("load details");
-                        showToast(binding.rId.getText().toString());
-                        init();
-                        listenMessages();
+//        String adminId = getIntent().getExtras().getString("user_id");
+//        String adminName = getIntent().getExtras().getString("admin_username");
+
+        from = getIntent().getExtras().getString("from");
+        if (from.equals("viewOrder") ) {
+//            showToast("from view order");
+            DocumentReference ref = firestore.collection("users").document("8AAwEpJRp4fIi03abWXa4vQEoG13");
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot ds = task.getResult();
+                        if (ds.exists()) {
+                            receiverUid = ds.getString("userId");
+                            receiverImg = ds.getString("image");
+                            binding.rImg.setText(receiverImg);
+                            binding.rId.setText(receiverUid);
+
+                            receiverUser = "Admin";
+                            loadReceiverDetails();
+                            listenMessages();
+                            setListeners();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }else if (preferenceManager.getString(Constants.KEY_USER_ID).equals("8AAwEpJRp4fIi03abWXa4vQEoG13")){
+            String receiverName = getIntent().getExtras().getString("receiver_name");
+//            showToast("FRRRRRRRRRRR");
+            binding.textName.setText(receiverName);
+//            showToast(binding.textName.getText().toString());
+//            showToast("FRRRRRRRRRRR");
+            firestore.collection("users").whereEqualTo("name", receiverName)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    receiverUid = documentSnapshot.getString("userId");
+                                    receiverImg = documentSnapshot.getString("image");
+                                    binding.rImg.setText(receiverImg);
+                                    binding.rId.setText(receiverUid);
+                                    receiverUser = receiverName;
 
-        receiverUser2 = getIntent().getExtras().getString("conversation_name");
-        binding.textName.setText(receiverUser2);
-        firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",receiverUser2).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        receiverUid = document.getString("userId");
-                        receiverImg = document.getString("image");
-                        binding.rImg.setText(receiverImg);
-                        binding.rId.setText(receiverUid);
-                        showToast("load details");
-                        showToast(binding.rId.getText().toString());
-                        init();
-                        listenMessages();
+                                    loadReceiverDetails();
+                                    listenMessages();
+                                    setListeners();
+                                }
+                            }
+                        }
+                    });
+
+        }else if (from.equals("recentConvo")){
+            binding.textName.setText(receiverUser);
+            firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",receiverUser).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            receiverUid = document.getString("userId");
+                            receiverImg = document.getString("image");
+                            binding.rImg.setText(receiverImg);
+                            binding.rId.setText(receiverUid);
+
+
+                            loadReceiverDetails();
+                            listenMessages();
+                            setListeners();
+                        }
                     }
                 }
-            }
-        });
+            });
+            receiverUser = getIntent().getExtras().getString("posted_by");
+            receiverUser2 = getIntent().getExtras().getString("conversation_name");
+            binding.textName.setText(receiverUser2);
+//            showToast("********");
+//            showToast(receiverUser2);
+//            showToast("********");
 
-//        loadReceiverDetails();
+            firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",receiverUser2).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            receiverUid = document.getString("userId");
+                            receiverImg = document.getString("image");
+                            binding.rImg.setText(receiverImg);
+                            binding.rId.setText(receiverUid);
+//                            showToast("load details");
+                            binding.textName.setText(receiverUser2);
+//                            showToast(binding.rId.getText().toString());
+                            loadReceiverDetails();
+                            setListeners();
+                            listenMessages();
+                        }
+                    }
+                }
+            });
+        } else if (from.equals("productAdapter")) {
+            String userName = getIntent().getExtras().getString("posted_by");
+//            showToast(userName);
+            binding.textName.setText(userName);
+
+            firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",userName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            receiverUid = document.getString("userId");
+                            receiverImg = document.getString("image");
+                            binding.rImg.setText(receiverImg);
+                            binding.rId.setText(receiverUid);
+
+                            receiverUser = userName;
+                            loadReceiverDetails();
+                            listenMessages();
+                            setListeners();
+                        }
+                    }
+                }
+            });
+        } else {
+
+            loadReceiverDetails();
+            setListeners();
+
+        }
+
+
+
 //        init();
 //        listenMessages();
 
@@ -130,6 +222,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
+
         message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID, receiverUid);
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
@@ -203,7 +296,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void loadReceiverDetails() {
         firestore = FirebaseFirestore.getInstance();
-        receiverUser = getIntent().getExtras().getString("posted_by");
+//        receiverUser = getIntent().getExtras().getString("posted_by");
         binding.textName.setText(receiverUser);
         firestore.collection(Constants.KEY_COLLECTION_USERS).whereEqualTo("name",receiverUser).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -214,8 +307,8 @@ public class ChatActivity extends AppCompatActivity {
                         receiverImg = document.getString("image");
                         binding.rImg.setText(receiverImg);
                         binding.rId.setText(receiverUid);
-                        showToast("load details");
-                        showToast(binding.rId.getText().toString());
+//                        showToast("load details");
+//                        showToast(binding.rId.getText().toString());
 
                     }
                 }

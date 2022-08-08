@@ -23,6 +23,7 @@
             android:layout_height="@dimen/_50sdp"
             android:text="Admin"
             android:textStyle="bold"
+            android:visibility="gone"
             android:textSize="@dimen/_13ssp"
             android:textColor="@color/white"
             app:cornerRadius="@dimen/_8sdp"

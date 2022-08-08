@@ -119,10 +119,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             firebaseUser = mAuth.getCurrentUser();
                             userId = mAuth.getCurrentUser().getUid();
-                            showToast(userId);
-
-
-
+//                            showToast(userId);
                             loading(true);
                             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                             HashMap<String, Object> userDetails = new HashMap<>();
@@ -130,8 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                             userDetails.put(Constants.KEY_EMAIL, binding.signUpEmail.getText().toString());
                             userDetails.put(Constants.KEY_IMAGE, encodedImg);
                             userDetails.put(Constants.KEY_USER_ID, mAuth.getCurrentUser().getUid());
-
-
+                            userDetails.put("isUser","1");
 
                             firestore.collection(Constants.KEY_COLLECTION_USERS).document(userId).set(userDetails)
                                     .addOnSuccessListener(documentReference -> {
@@ -142,8 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         preferenceManager.putString(Constants.KEY_IMAGE, encodedImg);
                                         preferenceManager.putString(Constants.KEY_EMAIL, binding.signUpEmail.getText().toString());
 
-
-
+                                        showToast("Welcome");
                                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
@@ -153,6 +148,9 @@ public class SignUpActivity extends AppCompatActivity {
                                         showToast(execption.getMessage());
                                     });
 
+                        } else {
+                            showToast("Failed to register");
+                            showToast(task.getException().getMessage());
                         }
                     }
                 });

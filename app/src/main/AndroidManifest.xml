@@ -12,6 +12,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.2fyp">
         <activity
+            android:name=".Activities.AdminViewOrder"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AdminOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AdminProductPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AdminUsersPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.EditProduct"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ViewOrderPlacedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ManageOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ViewMyOrder"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.MyOrders"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PlaceOrder"
+            android:exported="false" />
+        <activity
             android:name=".Activities.MyProductsActivity"
             android:exported="false" />
         <activity

@@ -102,6 +102,14 @@
                 android:text="description description description description description description description description description description description description description description"
                 android:textSize="@dimen/_12ssp" />
 
+            <TextView
+                android:id="@+id/product_id_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="product id"
+                android:visibility="gone"
+                />
+
 
             <RatingBar
                 android:id="@+id/product_ratingbar"

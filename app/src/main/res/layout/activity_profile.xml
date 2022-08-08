@@ -15,133 +15,133 @@
         />
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_centerInParent="true"
+    <LinearLayout
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:layout_width="@dimen/_300sdp"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_below="@id/toolbar"
-            android:orientation="vertical"
-            >
+            android:layout_marginTop="@dimen/_20sdp">
 
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/profile_img"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:background="@drawable/background_image"
+                android:scaleType="centerCrop" />
 
-
-            <FrameLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/profile_edit_img"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_40sdp"
-                >
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/profile_img"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_image"
-                    android:scaleType="centerCrop"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    />
-
-                <TextView
-                    android:id="@+id/profile_edit_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Photo"
-                    android:layout_gravity="center|bottom"
-                    />
+                android:visibility="gone"
+                android:layout_gravity="center|bottom"
+                android:text="Upload Photo" />
 
 
-            </FrameLayout>
+        </FrameLayout>
 
 
+        <EditText
+            android:id="@+id/profile_edit_name"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_input"
+            android:hint="Edit name"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_13ssp" />
 
-            <EditText
-                android:id="@+id/profile_edit_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/background_input"
-                android:hint="Edit name"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_16sdp"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/_13ssp"
-                />
+        <EditText
+            android:id="@+id/profile_edit_email"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_input"
+            android:hint="Edit email"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:visibility="gone"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_13ssp" />
 
-            <EditText
-                android:id="@+id/profile_edit_email"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/background_input"
-                android:hint="Edit email"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_16sdp"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/_13ssp"
-                />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_update"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="update profile"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/_8sdp" />
 
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_rmy_prodcuts"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="my products"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            app:cornerRadius="@dimen/_8sdp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_update"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="update profile"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/_8sdp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_my_orders"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="my orders"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            app:cornerRadius="@dimen/_8sdp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_rmy_prodcuts"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:text="my products"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/_8sdp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/orders_placed"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="Manage Orders"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            app:cornerRadius="@dimen/_8sdp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_my_orders"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:text="my orders"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/_8sdp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_log_out"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="Log out"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            app:cornerRadius="@dimen/_8sdp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_log_out"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:text="Log out"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/_8sdp"/>
 
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_delete_account_btn"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="Delete account"
+            android:textSize="@dimen/_9ssp"
+            app:cornerRadius="@dimen/_8sdp" />
+    </LinearLayout>
 
-    </ScrollView>
+
 
 
 

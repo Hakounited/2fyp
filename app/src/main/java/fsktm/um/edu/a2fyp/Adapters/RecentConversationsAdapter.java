@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +45,6 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
     @Override
     public void onBindViewHolder(@NonNull ConversationViewHolder holder, int position) {
         holder.setData(chatMessages.get(position));
-
     }
 
     @Override
@@ -66,11 +66,13 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
             binding.conversationName.setText(chatMessage.getConversationName());
             binding.txtRecentMsg.setText(chatMessage.getMessage());
 
+//            showToast(binding.conversationName.getText().toString());
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ChatActivity.class);
                     intent.putExtra("conversation_name", binding.conversationName.getText().toString());
+                    intent.putExtra("from", "recentConvo");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
@@ -79,6 +81,9 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
 
     }
 
+    private void showToast(String message) {
+        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+    }
 
     public Bitmap getConversationImg(String encodedImg) {
         byte[] bytes = Base64.decode(encodedImg, Base64.DEFAULT);

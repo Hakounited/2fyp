@@ -19,16 +19,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirestoreRegistrar;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -65,6 +68,7 @@ public class PostProductActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         String[] categories= new String[] {"Electronics","Fashion","Books","Games"};
+        binding.itemSelected.setText(null);
 
         arrayAdapter = new ArrayAdapter<String>(this,R.layout.dropdown_list,categories);
 
@@ -98,9 +102,27 @@ public class PostProductActivity extends AppCompatActivity {
         binding.postProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addProductToFirestore();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                if (binding.postProductName.getText().toString().isEmpty()){
+                    showToast("Please enter product name");
+                    return;
+                } else if (binding.postProductDescription.getText().toString().isEmpty()) {
+                    showToast("Please enter product description");
+                    return;
+                } else if (binding.postProductPrice.getText().toString().isEmpty()) {
+                    showToast("please enter product price");
+                    return;
+                } else if (binding.postProductImg.getDrawable() == null) {
+                    showToast("Please add product image");
+                    return;
+                } else if (binding.itemSelected.getText().toString().isEmpty()) {
+                    showToast("Please select category");
+                    return;
+                }
+                else {
+                    addProductToFirestore();
+
+                }
+
             }
         });
 
@@ -151,53 +173,85 @@ public class PostProductActivity extends AppCompatActivity {
         txt_productCategory = binding.itemSelected.getText().toString().trim();
         txt_userId = mAuth.getCurrentUser().getUid();
 
-        firestore.collection(Constants.KEY_COLLECTION_USERS).document(mAuth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        FirebaseFirestore fstore = FirebaseFirestore.getInstance();
+
+
+        fstore.collection("users").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                txt_username = value.getString("name");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    String userName = documentSnapshot.getString("name");
 
+                    DocumentReference ref = fstore.collection("products").document();
+                    String productDocId = ref.getId();
 
-                HashMap<String, Object> productDetails = new HashMap<>();
-                productDetails.put("product name", txt_productName);
-                productDetails.put("product category",txt_productCategory);
-                productDetails.put("product description",txt_productDescription);
-                productDetails.put("product price", txt_productPrice);
-                productDetails.put("product image",encodedImg);
-                productDetails.put("user Id",txt_userId);
-                productDetails.put("posted by",txt_username);
+                    HashMap<String, Object> productDetails = new HashMap<>();
+                    productDetails.put("product name", txt_productName);
+                    productDetails.put("product category",txt_productCategory);
+                    productDetails.put("product description",txt_productDescription);
+                    productDetails.put("product price", txt_productPrice);
+                    productDetails.put("product image",encodedImg);
+                    productDetails.put("user Id",txt_userId);
+                    productDetails.put("product Id", productDocId);
+                    productDetails.put("posted by",userName);
 
+                    ref.set(productDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            showToast("product added");
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showToast("Failed to add product");
+                            showToast(e.getMessage());
+                        }
+                    });
 
-                firestore.collection("products").document(txt_productName).set(productDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        showToast("success!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showToast(e.getMessage());
-                    }
-                });
+                }
             }
         });
-//        showToast(txt_username);
-        firestore.collection(Constants.KEY_COLLECTION_USERS).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
 
-
-                            }
-                        }
-                    }
-                });
-
-
-
-
-
+//
+//
+//        firestore.collection(Constants.KEY_COLLECTION_USERS).document(mAuth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+//                txt_username = value.getString("name");
+//
+//
+//                DocumentReference docRef = firestore.collection("products").document();
+//
+//
+//                HashMap<String, Object> productDetails = new HashMap<>();
+//                productDetails.put("product name", txt_productName);
+//                productDetails.put("product category",txt_productCategory);
+//                productDetails.put("product description",txt_productDescription);
+//                productDetails.put("product price", txt_productPrice);
+//                productDetails.put("product image",encodedImg);
+//                productDetails.put("user Id",txt_userId);
+//                productDetails.put("product Id", productDocId);
+//                productDetails.put("posted by",txt_username);
+//
+//
+//                firestore.collection("products").document(productDocId).set(productDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        showToast("success!");
+//                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                        startActivity(intent);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        showToast(e.getMessage());
+//                    }
+//                });
+//            }
+//        });
+//
     }
 
 

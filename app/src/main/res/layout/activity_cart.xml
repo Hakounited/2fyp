@@ -45,10 +45,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_320sdp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/cart_tv"
         android:layout_above="@+id/bottom_nav"
-        android:layout_marginTop="@dimen/_50sdp" />
+        android:padding="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

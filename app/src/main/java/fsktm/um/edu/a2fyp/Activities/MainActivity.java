@@ -19,7 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ProductsAdapter productsAdapter;
 
     FirebaseFirestore firestore;
+    FirebaseAuth mAuth;
 
     ListenerRegistration query;
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         productList = new ArrayList<>();
 
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         bottomNavSelectItem();
         displayProducts();
@@ -121,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
                 String c3 = "Books";
                 Intent intent = new Intent(getApplicationContext(), CetegoriesActivity.class);
                 intent.putExtra("category",c3);
+                startActivity(intent);
+            }
+        });
+
+        binding.categoryGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String c4 = "Games";
+                Intent intent = new Intent(getApplicationContext(), CetegoriesActivity.class);
+                intent.putExtra("category",c4);
                 startActivity(intent);
             }
         });
@@ -215,6 +230,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayProducts() {
 
+
+
+        mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
         firestore.collection("products").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -234,14 +252,11 @@ public class MainActivity extends AppCompatActivity {
                         product.setProductPrice(dc.getDocument().get("product price").toString());
                         product.setProductImg(dc.getDocument().get("product image").toString());
                         product.setPostedBy(dc.getDocument().get("posted by").toString());
+                        product.setProductId(dc.getDocument().get("product Id").toString());
                         productList.add(product);
                     }
                     productsAdapter.notifyDataSetChanged();
-
-
-
                 }
-
             }
         });
 

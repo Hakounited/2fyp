@@ -16,7 +16,7 @@
     <color name="icon_background">#20ffffff</color>
     <color name="erro">#b00020</color>
     <color name="received_msg_background">#090d16</color>
-
+    <color name="green">#32CD32</color>
 
     <color name="cardBackground">#f1f1f5 </color>
     <color name="cardBackground2">#bcd0b9 </color>

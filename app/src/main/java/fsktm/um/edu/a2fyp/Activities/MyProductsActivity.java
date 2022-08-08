@@ -78,9 +78,10 @@ public class MyProductsActivity extends AppCompatActivity {
                         product.setProductDescription(dc.getDocument().get("product description").toString());
                         product.setProductPrice(dc.getDocument().get("product price").toString());
                         product.setProductImg(dc.getDocument().get("product image").toString());
+                        product.setProductId(dc.getDocument().get("product Id").toString());
 //                        product.setPostedBy(dc.getDocument().get("posted_by").toString());
                         myProductList.add(product);
-                        showToast("display products3");
+
                     }
                     myProductsAdapter.notifyDataSetChanged();
                 }

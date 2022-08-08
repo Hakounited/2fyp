@@ -50,20 +50,25 @@ public class CartActivity extends AppCompatActivity {
 
         displayProducts();
         setListeners();
+        bottomNavSelectItem();
     }
 
     private void setListeners() {
+
+
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+
     }
 
     private void displayProducts() {
         String userId = mAuth.getCurrentUser().getUid();
-        firestore.collection("cart").document(userId).collection("products").orderBy("product name").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("cart").document(userId).collection("products").orderBy("product name")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null){
@@ -76,8 +81,8 @@ public class CartActivity extends AppCompatActivity {
                         product.setProductName(dc.getDocument().get("product name").toString());
                         product.setProductDescription(dc.getDocument().get("product description").toString());
                         product.setProductPrice(dc.getDocument().get("product price").toString());
-//                        product.setProductImg(dc.getDocument().get("product image").toString());
                         product.setPostedBy(dc.getDocument().get("posted_by").toString());
+                        product.setProductId(dc.getDocument().get("product_id").toString());
                         cartList.add(product);
                     }
                     cartAdapter.notifyDataSetChanged();
@@ -114,6 +119,7 @@ public class CartActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.bottom_navigation_chat_menu:
+                        startActivity(new Intent(getApplicationContext(),ChatListActivity.class));
                         return true;
 
                     case R.id.bottom_navigation_profile_menu:

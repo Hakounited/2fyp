@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/_8sdp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/admin_order_id_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="order id:"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/admin_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toRightOf="@+id/admin_order_id_tv"
+            android:text="09999999999999"
+            android:textColor="@color/primary"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selller: "
+            android:layout_below="@+id/admin_order_id_tv"
+            android:textColor="@color/primary"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/order_seller_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/admin_order_id_tv"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toRightOf="@+id/admin_order_id_tv"
+            android:text="Name"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="buyer: "
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:layout_below="@id/order_seller_name"
+
+            />
+
+        <TextView
+            android:id="@+id/buyer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_seller_name"
+            android:layout_toRightOf="@+id/admin_order_id_tv"
+            android:text="Name"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            />
+
+
+        <ImageButton
+            android:id="@+id/delete_order_btn"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@drawable/delete"
+            android:backgroundTint="@color/primary" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

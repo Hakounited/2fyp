@@ -13,7 +13,6 @@
         android:elevation="@dimen/_5sdp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="@drawable/ic_drawer"
         />
 
 
